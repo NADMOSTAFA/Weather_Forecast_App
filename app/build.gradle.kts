@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id ("androidx.navigation.safeargs")
+
 
 }
 
@@ -34,6 +36,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        dataBinding = true
     }
 }
 
@@ -84,4 +90,20 @@ dependencies {
 
     //Lottie
     implementation ("com.airbnb.android:lottie:3.4.0")
+
+    //Animated Drawer
+    implementation ("nl.psdcompany:duo-navigation-drawer:3.0.0")
+    implementation ("com.google.android.material:material:1.11.0")
+
+
+    //Jackson
+    implementation ("com.fasterxml.jackson.core:jackson-core:2.13.0")
+    implementation ("com.fasterxml.jackson.core:jackson-databind:2.13.0")
+    implementation ("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
+
+    //Location & Maps
+    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+
 }

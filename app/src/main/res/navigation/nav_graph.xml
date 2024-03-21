@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/home2">
+
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.nada.weatherapp.weather_info.view.Home"
+        android:label="Home" >
+        <action
+            android:id="@+id/action_home2_to_fiveDaysForecast2"
+            app:destination="@id/fiveDaysForecast2" />
+    </fragment>
+    <fragment
+        android:id="@+id/alert"
+        android:name="com.nada.weatherapp.Alert"
+        android:label="fragment_alert"
+        tools:layout="@layout/fragment_alert" />
+    <fragment
+        android:id="@+id/setting"
+        android:name="com.nada.weatherapp.settings.view.Setting"
+        android:label="Setting" >
+        <action
+            android:id="@+id/action_setting_to_googleMapFragment"
+            app:destination="@id/googleMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favorite"
+        android:name="com.nada.weatherapp.Favorite"
+        android:label="Favorite" />
+    <fragment
+        android:id="@+id/fiveDaysForecast2"
+        android:name="com.nada.weatherapp.weather_info.view.FourDaysForecast"
+        android:label="FiveDaysForecast" >
+        <action
+            android:id="@+id/action_fiveDaysForecast2_to_home2"
+            app:destination="@id/home2"
+            app:popUpTo="@id/home2"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="longitude"
+            app:argType="string" />
+        <argument
+            android:name="latitude"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/googleMapFragment"
+        android:name="com.nada.weatherapp.GoogleMapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_googleMapFragment_to_home2"
+            app:destination="@id/home2" />
+    </fragment>
+</navigation>
