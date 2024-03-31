@@ -2,8 +2,12 @@ package com.nada.weatherapp
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -15,14 +19,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigation.findNavController
+import com.nada.weatherapp.Utils.Constants
+import com.nada.weatherapp.data.local.WeatherLocalDataSourceImpl
+import com.nada.weatherapp.data.local.WeatherDatabase
 import com.nada.weatherapp.data.repo.WeatherInfoRepositoryImpl
 import com.nada.weatherapp.data.remote.ForecastRemoteDataSourceImpl
-import com.nada.weatherapp.settings.view.ARABIC
-import com.nada.weatherapp.settings.view.ENGLISH
 import com.nada.weatherapp.settings.viewModel.SettingsViewModel
 import com.nada.weatherapp.settings.viewModel.SettingsViewModelFactory
 import com.nada.weatherapp.data.shared_pref.SharedPreferencesDataSourceImpl
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
@@ -32,42 +38,69 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var drawerLayout: DuoDrawerLayout? = null
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     private lateinit var settingsViewModel: SettingsViewModel
     private lateinit var settingsViewModelFactory: SettingsViewModelFactory
+    private lateinit var toolbar : Toolbar
+    private lateinit var themedContext: ContextThemeWrapper
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        navController = findNavController(this, R.id.nav_host_fragment)
+//        settingsViewModelFactory = SettingsViewModelFactory(
+//            WeatherInfoRepositoryImpl.getInstance(
+//                ForecastRemoteDataSourceImpl.getInstance(),
+//                SharedPreferencesDataSourceImpl.getInstance(this),
+//                FavoriteWeatherLocalDataSourceImpl(
+//                    WeatherDatabase.getInstance(this).getFavoriteWeatherDao()
+//                ),
+//                CachedWeatherLocalDataSourceImpl(
+//                    WeatherDatabase.getInstance(this).getWeatherDao()
+//                )
+//            )
+//        )
         settingsViewModelFactory = SettingsViewModelFactory(
             WeatherInfoRepositoryImpl.getInstance(
                 ForecastRemoteDataSourceImpl.getInstance(),
-                SharedPreferencesDataSourceImpl.getInstance(this)
+                SharedPreferencesDataSourceImpl.getInstance(this),
+                WeatherLocalDataSourceImpl(
+                    WeatherDatabase.getInstance(this).getWeatherDao(),
+                    WeatherDatabase.getInstance(this).getFavoriteWeatherDao(),
+                    WeatherDatabase.getInstance(this).getAlertDao()
+                )
             )
         )
         settingsViewModel =
             ViewModelProvider(this, settingsViewModelFactory).get(SettingsViewModel::class.java)
-        init();
+        if (savedInstanceState != null) {
+            settingsViewModel.setSettingConfiguration(Constants.SESSION,true)
+        }
 
+        setUp()
+        setContentView(R.layout.activity_main)
+        navController = findNavController(this, R.id.nav_host_fragment)
+        init();
+        Log.i("here", "onCreate: main activity ${settingsViewModel.getSettingConfiguration(Constants.LOCATION,"")}")
         lifecycleScope.launch(Dispatchers.IO) {
-            settingsViewModel.language.collect { language ->
-                val primaryLocale: Locale = this@MainActivity.resources.configuration.locales[0]
+            settingsViewModel.language.collectLatest { language ->
+                val primaryLocale = this@MainActivity.resources.configuration.locales[0]
                 val locale: String = primaryLocale.language
-                Log.i("here", "onCreate: locale $locale language $language  ")
+                Log.i(
+                    "here",
+                    "onCreate: locale ${locale} language ${language} if ${!locale.equals(language)}"
+                )
                 if (!locale.equals(language)) {
-                    Log.i("here", "language: $language")
                     val newLocale = when (language) {
-                        ARABIC -> {
+                        Constants.ARABIC -> {
                             Locale("ar")
                         }
 
-                        ENGLISH -> {
+                        Constants.ENGLISH -> {
                             Locale("en")
                         }
-                        // Add more languages as needed
-                        else -> Locale.getDefault() // Fallback to device's default language
+
+                        else -> Locale.getDefault()
                     }
 
 
@@ -94,33 +127,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//
-//    }
-
-    private fun updateLocale(context: Context, locale: Locale) {
-        Log.i("here", "updateLocale: $locale ")
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.setLocale(locale)
-        baseContext.resources.updateConfiguration(config, baseContext.resources.displayMetrics)
-    }
-
-    private fun refreshUI() {
-        recreate()
-    }
-
     private fun init() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
+         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
+
         drawerLayout = findViewById<View>(R.id.drawer) as DuoDrawerLayout
         val drawerToggle = DuoDrawerToggle(
             this, drawerLayout, toolbar,
             nl.psdcompany.psd.duonavigationdrawer.R.string.navigation_drawer_open,
             nl.psdcompany.psd.duonavigationdrawer.R.string.navigation_drawer_close
         )
+
         drawerLayout!!.setDrawerListener(drawerToggle)
         drawerToggle.syncState()
         val contentView = drawerLayout!!.getContentView()
@@ -135,14 +153,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         ll_Alerts.setOnClickListener(this)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.fiveDaysForecast2) {
+            if (destination.id == R.id.googleMapFragment || destination.id == R.id.fiveDaysForecast2) {
                 supportActionBar?.hide()
                 drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            } else {
-                supportActionBar?.show()
-                drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED)
             }
+        //            else {
+//                supportActionBar?.show()
+//                drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED)
+//            }
         }
+    }
+
+
+
+    override fun onRestart() {
+        settingsViewModel.setSettingConfiguration(Constants.SESSION,true)
+        super.onRestart()
+        Log.i("here", "onRestart: ")
     }
 
 
@@ -165,5 +192,78 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
+    override fun onPause() {
+        super.onPause()
+        settingsViewModel.setSettingConfiguration(Constants.SESSION,false)
+        Log.i("here", "onPause: ")
+    }
 
+    override fun onStop() {
+        super.onStop()
+        Log.i("here", "onStop: ")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("here", "onDestroy: ")
+
+    }
+
+    private fun setUp() {
+        val primaryLocale = this@MainActivity.resources.configuration.locales[0]
+        val locale: String = primaryLocale.language
+        val language = settingsViewModel.getSettingConfiguration(Constants.LANGUAGE,"")
+        if (!locale.equals(language)) {
+            val newLocale = when (language) {
+                Constants.ARABIC -> {
+                    Locale("ar")
+                }
+
+                Constants.ENGLISH -> {
+                    Locale("en")
+                }
+                // Add more languages as needed
+                else -> Locale.getDefault() // Fallback to device's default language
+            }
+            Locale.setDefault(newLocale)
+            val res = this@MainActivity.resources
+            val config = Configuration(res.configuration)
+            config.setLocale(newLocale)
+            res.updateConfiguration(config, res.displayMetrics)
+            if (language == "en") {
+                drawerLayout?.gravity = GravityCompat.START
+                window.decorView.layoutDirection = View.LAYOUT_DIRECTION_LTR
+            } else {
+                drawerLayout?.gravity = GravityCompat.START
+                window.decorView.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            }
+        }
+    }
+
+    fun hideActionBarAndDrawer() {
+        supportActionBar?.hide()
+        drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+
+    }
+
+    fun openDrawerLayout(){
+        drawerLayout?.openDrawer()
+        drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+    fun showActionBarAndDrawer() {
+        supportActionBar?.show()
+        drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+//    fun blackToolbar(){
+//         toolbar = findViewById(R.id.toolbar)
+//        toolbar.popupTheme = androidx.appcompat.R.style.ThemeOverlay_AppCompat_Light
+//        val themedContext = ContextThemeWrapper(toolbar.context, androidx.appcompat.R.style.ThemeOverlay_AppCompat_DayNight_ActionBar)
+//        toolbar.context = themedContext
+//    }
+//    fun whiteToolbar(){
+//        toolbar = findViewById(R.id.toolbar)
+//        toolbar.popupTheme = androidx.appcompat.R.style.ThemeOverlay_AppCompat_Light
+//        themedContext = ContextThemeWrapper(toolbar.context, androidx.appcompat.R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
+//    }
 }

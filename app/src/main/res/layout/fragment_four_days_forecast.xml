@@ -4,6 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="java.util.Locale" />
+        <variable
+            name="unit"
+            type="String" />
+
         <variable
             name="weatherInfo"
             type="com.nada.weatherapp.data.model.WeatherInfo" />
@@ -22,7 +27,22 @@
         android:background="#f8f7fd"
         tools:context=".weather_info.view.FourDaysForecast">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_layout"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading1"
+            app:lottie_url="REPLACE_JSON_URL" />
+
         <View
+            android:id="@+id/viewLayout"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@drawable/gradient_rounded_background"
@@ -30,6 +50,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
+            android:id="@+id/homeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,7 +78,8 @@
                         android:layout_height="50dp"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layoutDirection="locale">
 
                         <FrameLayout
                             android:id="@+id/btnBack"
@@ -66,14 +88,14 @@
                             android:layout_weight="1">
 
                             <ImageView
-                                android:id="@+id/imageView1"
+                                android:id="@+id/btnOpenDrawer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
                                 android:layout_gravity="start"
                                 android:src="@drawable/arrow_back"
                                 android:visibility="visible"
-
+                                android:scaleX='@{Locale.getDefault().getLanguage().equals("ar") ? -1 : 1}'
                                 app:tint="@color/white" />
                         </FrameLayout>
 
@@ -89,9 +111,9 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="end"
                                 android:gravity="center"
-                                android:textSize="22sp"
                                 android:text="@string/next_4_days"
                                 android:textColor="@color/white"
+                                android:textSize="22sp"
                                 android:textStyle="bold" />
                         </FrameLayout>
 
@@ -99,7 +121,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="end"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:visibility="invisible">
 
                             <ImageView
                                 android:id="@+id/imageView2"
@@ -448,6 +471,29 @@
 
                             </LinearLayout>
 
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{unit}"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary2"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvMaxTemprature"
+                                app:layout_constraintStart_toEndOf="@+id/tvMaxTemprature"
+                                app:layout_constraintTop_toTopOf="@+id/tvMaxTemprature" />
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{unit}"
+                                android:textSize="8sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/primary2"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvMinTemprature"
+                                app:layout_constraintStart_toEndOf="@+id/tvMinTemprature"
+                                app:layout_constraintTop_toTopOf="@+id/tvMinTemprature" />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -455,11 +501,11 @@
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="8dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginEnd="12dp"
-                        android:orientation="vertical"
+                        android:layout_marginBottom="8dp"
                         android:adapter="@{adapter}"
+                        android:orientation="vertical"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

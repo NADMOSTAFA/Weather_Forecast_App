@@ -2,9 +2,12 @@ package com.nada.weatherapp.data.shared_pref
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.nada.weatherapp.Utils.Constants
+
 
 class SharedPreferencesDataSourceImpl private constructor(context: Context) :
     SharedPreferencesDataSource {
+        private var sharedPreferences: SharedPreferences
     companion object {
         private const val PREFS_NAME = "weather_app_prefs"
         private var instance: SharedPreferencesDataSourceImpl? = null
@@ -19,7 +22,22 @@ class SharedPreferencesDataSourceImpl private constructor(context: Context) :
         }
     }
 
-    private val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    init {
+        sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        if (!sharedPreferences.contains(Constants.LANGUAGE)){
+            var primaryLocale = context.resources.configuration.locales[0]
+            val locale: String = primaryLocale.language
+            saveString(Constants.LANGUAGE, locale)
+            saveString(Constants.TEMPERATURE_UNIT, Constants.STANDARD)
+            saveString(Constants.WIND_UNIT, Constants.METER_PER_SECOND)
+            saveString(Constants.LOCATION, Constants.GPS)
+            saveString(Constants.LONGITUDE,"0.0")
+            saveString(Constants.LATITUDE,"0.0")
+            saveBoolean(Constants.SESSION,false)
+        }
+    }
+
+
 
     override fun saveString(key: String, value: String) {
         sharedPreferences.edit().putString(key, value).apply()
@@ -48,4 +66,6 @@ class SharedPreferencesDataSourceImpl private constructor(context: Context) :
     override fun removePreference(key: String) {
         sharedPreferences.edit().remove(key).apply()
     }
+
+
 }

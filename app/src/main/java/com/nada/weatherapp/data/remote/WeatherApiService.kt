@@ -9,8 +9,8 @@ interface WeatherApiService {
     suspend fun getForecast(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
-        @Query("appid") apiKey: String,
+        @Query("appid") apiKey: String = "47c1440938387595e380110ff3ce9e84",
         @Query("lang") lang: String,
-        @Query("units") units: String
+        @Query("units") units: String = "standard"
     ): WeatherResponse
 }

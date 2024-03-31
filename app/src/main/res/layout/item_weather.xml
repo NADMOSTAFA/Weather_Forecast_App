@@ -11,6 +11,7 @@
         <variable
             name="time"
             type="String" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -21,7 +22,7 @@
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mealLayout"
+            android:id="@+id/weatherLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

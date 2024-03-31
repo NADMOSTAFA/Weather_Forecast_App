@@ -32,4 +32,21 @@
     <string name="pressure">Pressure</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="save">Save</string>
+    <string name="favorite">Favorite</string>
+    <string name="time">Time:</string>
+    <string name="date">Date:</string>
+    <string name="alarm">Set Alert</string>
+    <string name="notificationSmall">Notification</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="now">Now</string>
+    <string name="no_connection">No Connection</string>
+    <string name="data_provided_by_openweathermap">Data provided by OpenWeatherMap</string>
+    <string name="last_updated">Last Updated:</string>
+    <string name="require_location_permission">Require Location Permission</string>
+    <string name="allow">Allow</string>
+    <string name="are_you_sure_you_want_to_remove_the_item">Are you sure you want to remove the item?</string>
+    <string name="delete">Delete</string>
+    <string name="unknow">Unknown</string>
+    <string name="skylume_alert">Skylume Alert</string>
 </resources>

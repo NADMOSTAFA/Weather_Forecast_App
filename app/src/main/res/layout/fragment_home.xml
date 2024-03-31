@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="java.util.Locale" />
         <variable
             name="weatherInfo"
             type="com.nada.weatherapp.data.model.WeatherInfo" />
@@ -20,6 +20,9 @@
         <variable
             name="adapter"
             type="com.nada.weatherapp.weather_info.view.TodayForeCastListAdapter" />
+        <variable
+            name="unit"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,16 +31,153 @@
         android:background="#f8f7fd"
         tools:context=".weather_info.view.Home">
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/locationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/require_location_permission"
+                android:textColor="@color/grayText"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/locationAnimation"
+                app:layout_constraintEnd_toEndOf="@+id/locationAnimation"
+                app:layout_constraintStart_toStartOf="@+id/locationAnimation" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/locationAnimation"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:layout_marginStart="136dp"
+                android:layout_marginTop="355dp"
+                android:layout_marginEnd="137dp"
+                android:layout_marginBottom="354dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/allow_loca1"
+                app:lottie_url="REPLACE_JSON_URL" />
+
+            <TextView
+                android:id="@+id/btnAllow"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/btnshow_background"
+                android:gravity="center"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="@string/allow"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="@+id/locationAnimation"
+                app:layout_constraintStart_toStartOf="@+id/locationAnimation"
+                app:layout_constraintTop_toBottomOf="@+id/locationAnimation" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingAnimation"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="136dp"
+                android:layout_marginTop="355dp"
+                android:layout_marginEnd="137dp"
+                android:layout_marginBottom="354dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading1"
+                app:lottie_url="REPLACE_JSON_URL" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/networkLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/networkAnimation"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginStart="136dp"
+                android:layout_marginTop="355dp"
+                android:layout_marginEnd="137dp"
+                android:layout_marginBottom="354dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lose_conn2"
+                app:lottie_url="REPLACE_JSON_URL" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_connection"
+                android:textColor="@color/grayText"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/networkAnimation"
+                app:layout_constraintStart_toStartOf="@+id/networkAnimation"
+                app:layout_constraintTop_toBottomOf="@+id/networkAnimation" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <View
+            android:id="@+id/viewLayout"
             android:layout_width="match_parent"
             android:layout_height="510dp"
             android:background="#f3ebf8"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
+            android:id="@+id/homeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -55,12 +195,25 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="18dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:src="@drawable/sun"
+                        app:layout_constraintEnd_toStartOf="@+id/textView13"
+                        app:layout_constraintTop_toTopOf="@+id/textView13"
+                        app:tint="#6B000000" />
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:layoutDirection="locale"
                         android:orientation="horizontal"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -71,13 +224,13 @@
                             android:layout_weight="1">
 
                             <ImageView
-                                android:id="@+id/imageView1"
+                                android:id="@+id/btnOpenDrawer"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
-                                android:layout_gravity="start"
-                                android:src="@drawable/menu"
-                                android:visibility="gone"
+                                android:layout_gravity="start|top"
+                                android:src="@drawable/menu2"
+                                android:visibility="visible"
 
                                 app:tint="@color/black" />
                         </FrameLayout>
@@ -112,6 +265,7 @@
                                 android:layout_centerInParent="true"
                                 android:layout_gravity="start"
                                 android:layout_marginStart="2dp"
+                                android:scaleX='@{Locale.getDefault().getLanguage().equals("ar") ? -1 : 1}'
                                 android:src="@drawable/location"
                                 android:visibility="visible"
                                 app:tint="@color/primary" />
@@ -172,11 +326,12 @@
                                 android:id="@+id/tvTemprature"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="24dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="2dp"
                                 android:gravity="center"
                                 android:text='@{String.valueOf(weatherInfo.main.temp) + "\u00B0"}'
                                 android:textColor="@color/white"
-                                android:textSize="70sp"
+                                android:textSize="60sp"
                                 android:textStyle="bold"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.5"
@@ -188,7 +343,7 @@
                                 android:id="@+id/tvStatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="32dp"
+                                android:layout_marginTop="40dp"
                                 android:gravity="center"
                                 android:text="@{weatherInfo.weather.get(0).description}"
                                 android:textColor="@color/white"
@@ -198,6 +353,19 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent"
                                 tools:text="Clear Sky" />
+
+                            <TextView
+                                android:id="@+id/tempUnit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{unit}"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="@+id/tvTemprature"
+                                app:layout_constraintStart_toEndOf="@+id/tvTemprature"
+                                app:layout_constraintTop_toTopOf="@+id/tvTemprature"
+                                tools:text="C" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
@@ -301,8 +469,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
 
-                                    android:text="@string/humidity"
                                     android:layout_marginTop="8dp"
+                                    android:text="@string/humidity"
                                     android:textColor="@color/grayText"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
@@ -348,13 +516,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
 
-                                    android:text="@string/visibility"
                                     android:layout_marginTop="8dp"
+                                    android:text="@string/visibility"
                                     android:textColor="@color/grayText"
                                     android:textSize="12sp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -393,13 +562,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
                                     android:text="@string/clouds"
                                     android:textColor="@color/grayText"
                                     android:textSize="12sp"
-                                    android:layout_marginTop="8dp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -438,14 +608,13 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="8dp"
                                     android:text="@string/pressure"
                                     android:textColor="@color/grayText"
                                     android:textSize="12sp"
-                                    android:layout_marginTop="8dp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
-
 
 
                         </LinearLayout>
@@ -461,35 +630,39 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
                     <LinearLayout
                         android:id="@+id/btnFiveDaysForecast"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="12dp"
-                        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+                        android:layoutDirection="locale"
                         app:layout_constraintEnd_toEndOf="parent"
-                        >
+                        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
                         <TextView
                             android:id="@+id/textView5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/next_4_days"
                             android:textSize="18sp"
-                            android:textStyle="bold"
-                             />
+                            android:textStyle="bold" />
+
                         <ImageView
                             android:id="@+id/arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="15dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/arrow_forward__2_"
-                             />
+                            android:scaleX='@{Locale.getDefault().getLanguage().equals("ar") ? -1 : 1}'
+                            app:srcCompat="@drawable/arrow_forward__2_" />
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="-40dp"
                         android:layout_marginBottom="8dp"
                         android:adapter="@{adapter}"
                         android:orientation="horizontal"
@@ -498,6 +671,30 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView4"
                         tools:listitem="@layout/item_weather" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/data_provided_by_openweathermap"
+                        android:textColor="#6B000000"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text='@{@string/last_updated + " " + weatherInfo.date}'
+                        android:textColor="#6B000000"
+                        android:visibility="visible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

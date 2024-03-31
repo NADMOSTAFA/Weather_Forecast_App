@@ -7,13 +7,16 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.nada.weatherapp.data.model.Converters
 import com.nada.weatherapp.data.model.FavoriteWeather
+import com.nada.weatherapp.data.model.WeatherAlert
 import com.nada.weatherapp.data.model.WeatherResponse
 
-@Database(entities = [WeatherResponse::class, FavoriteWeather::class], version = 1)
+@Database(entities = [WeatherResponse::class, FavoriteWeather::class , WeatherAlert::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class WeatherDatabase : RoomDatabase() {
     abstract fun getWeatherDao(): WeatherDao
     abstract fun getFavoriteWeatherDao(): FavoriteWeatherDao
+
+    abstract fun getAlertDao():AlertDao
 
     companion object {
         @Volatile

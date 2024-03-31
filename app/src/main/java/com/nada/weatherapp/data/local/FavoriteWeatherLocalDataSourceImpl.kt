@@ -11,11 +11,11 @@ class FavoriteWeatherLocalDataSourceImpl(private val dao : FavoriteWeatherDao) :
         }
     }
 
-    override suspend fun insertFavoriteWeather(favoriteWeather: FavoriteWeather): Long {
-        return dao.insertFavoriteWeather(favoriteWeather)
+    override suspend fun insertFavoriteWeather(favoriteWeather: FavoriteWeather) {
+         dao.insertFavoriteWeather(favoriteWeather)
     }
 
-    override suspend fun deleteFavoriteWeather(favoriteWeather: FavoriteWeather): Int {
-        return dao.deleteFavoriteWeather(favoriteWeather)
+    override suspend fun deleteFavoriteWeather(favoriteWeather: FavoriteWeather) {
+         dao.deleteFavoriteWeather(favoriteWeather)
     }
 }

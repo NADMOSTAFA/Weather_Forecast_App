@@ -13,7 +13,50 @@
         android:background="#f8f7fd"
         tools:context=".settings.view.Setting">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/networkLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/networkAnimation"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginStart="136dp"
+                android:layout_marginTop="355dp"
+                android:layout_marginEnd="137dp"
+                android:layout_marginBottom="354dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lose_conn2"
+                app:lottie_url="REPLACE_JSON_URL" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/no_connection"
+                android:textSize="18sp"
+                android:textColor="@color/grayText"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/networkAnimation"
+                app:layout_constraintStart_toStartOf="@+id/networkAnimation"
+                app:layout_constraintTop_toBottomOf="@+id/networkAnimation" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <View
+            android:id="@+id/viewLayout"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:background="@drawable/gradient_rounded_background"
@@ -21,77 +64,78 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
+            android:id="@+id/settingLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        android:layout_weight="0.2">
+
+                        <TextView
+                            android:id="@+id/tvLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:gravity="center"
+                            android:text="@string/settings"
+                            android:textColor="@color/white"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+
+                </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="700dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/custom_corner_background"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout"
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-                        <FrameLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="end"
-                            android:layout_weight="0.2">
-
-                            <TextView
-                                android:id="@+id/tvLocation"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="end"
-                                android:gravity="center"
-                                android:text="@string/settings"
-                                android:textColor="@color/white"
-                                android:textSize="22sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-
-
-                    </LinearLayout>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardView"
-                        android:layout_width="match_parent"
-                        android:layout_height="1000dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="16dp"
-                        android:layout_weight="1"
-                        app:cardCornerRadius="15dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingStart="16dp"
-
-                            android:paddingEnd="16dp">
+                            android:layout_height="wrap_content">
 
                             <RadioGroup
                                 android:id="@+id/langauage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="108dp"
                                 android:elevation="10dp"
-                                app:layout_constraintBottom_toBottomOf="@+id/cardView5"
-                                app:layout_constraintEnd_toEndOf="@+id/cardView4">
+                                app:layout_constraintBottom_toBottomOf="@+id/cardEnglish"
+                                app:layout_constraintEnd_toEndOf="@+id/cardArabic">
 
                                 <RadioButton
                                     android:id="@+id/rbArabic"
@@ -112,9 +156,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="166dp"
                                 android:elevation="10dp"
-                                app:layout_constraintBottom_toBottomOf="@+id/cardView8"
-                                app:layout_constraintEnd_toEndOf="@+id/cardView6"
-                                app:layout_constraintTop_toTopOf="@+id/cardView6">
+                                app:layout_constraintBottom_toBottomOf="@+id/cardKelvin"
+                                app:layout_constraintEnd_toEndOf="@+id/cardCelsius"
+                                app:layout_constraintTop_toTopOf="@+id/cardCelsius">
 
                                 <RadioButton
                                     android:id="@+id/rbCelsius"
@@ -146,8 +190,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="108dp"
                                 android:elevation="10dp"
-                                app:layout_constraintBottom_toBottomOf="@+id/cardView10"
-                                app:layout_constraintEnd_toEndOf="@+id/cardView9">
+                                app:layout_constraintBottom_toBottomOf="@+id/cardMPH"
+                                app:layout_constraintEnd_toEndOf="@+id/cardMPS">
 
                                 <RadioButton
                                     android:id="@+id/rbMeterPerSec"
@@ -167,8 +211,8 @@
                                 android:layout_height="108dp"
                                 android:checkedButton="@id/rbGps"
                                 android:elevation="10dp"
-                                app:layout_constraintBottom_toBottomOf="@+id/cardView14"
-                                app:layout_constraintEnd_toEndOf="@+id/cardView13">
+                                app:layout_constraintBottom_toBottomOf="@+id/cardMap"
+                                app:layout_constraintEnd_toEndOf="@+id/cardGps">
 
                                 <RadioButton
                                     android:id="@+id/rbGps"
@@ -181,8 +225,6 @@
                                     android:layout_height="50dp"
                                     android:layout_marginTop="8dp" />
                             </RadioGroup>
-
-
 
                             <TextView
                                 android:id="@+id/textView"
@@ -199,7 +241,7 @@
                                 app:layout_constraintTop_toBottomOf="@+id/cardView12" />
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView4"
+                                android:id="@+id/cardArabic"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
@@ -234,12 +276,12 @@
                             </androidx.cardview.widget.CardView>
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView5"
+                                android:id="@+id/cardEnglish"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
                                 android:elevation="8dp"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView4">
+                                app:layout_constraintTop_toBottomOf="@+id/cardArabic">
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:layout_width="match_parent"
@@ -279,10 +321,10 @@
                                 android:textSize="14sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="@+id/textView"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView5" />
+                                app:layout_constraintTop_toBottomOf="@+id/cardEnglish" />
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView6"
+                                android:id="@+id/cardCelsius"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
@@ -316,12 +358,12 @@
                             </androidx.cardview.widget.CardView>
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView7"
+                                android:id="@+id/cardFah"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
                                 android:elevation="8dp"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView6"
+                                app:layout_constraintTop_toBottomOf="@+id/cardCelsius"
                                 tools:layout_editor_absoluteX="16dp">
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -351,12 +393,12 @@
                             </androidx.cardview.widget.CardView>
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView8"
+                                android:id="@+id/cardKelvin"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
                                 android:elevation="8dp"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView7"
+                                app:layout_constraintTop_toBottomOf="@+id/cardFah"
                                 tools:layout_editor_absoluteX="16dp">
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -397,10 +439,10 @@
                                 android:textSize="14sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="@+id/textView2"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView8" />
+                                app:layout_constraintTop_toBottomOf="@+id/cardKelvin" />
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView9"
+                                android:id="@+id/cardMPS"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
@@ -435,12 +477,12 @@
                             </androidx.cardview.widget.CardView>
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView10"
+                                android:id="@+id/cardMPH"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
                                 android:elevation="8dp"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView9"
+                                app:layout_constraintTop_toBottomOf="@+id/cardMPS"
                                 tools:layout_editor_absoluteX="16dp">
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -480,8 +522,9 @@
                                 android:textColor="@color/grayText"
                                 android:textSize="14sp"
                                 android:textStyle="bold"
+                                android:visibility="gone"
                                 app:layout_constraintStart_toStartOf="@+id/textView3"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView10" />
+                                app:layout_constraintTop_toBottomOf="@+id/cardMPH" />
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/cardView11"
@@ -489,6 +532,7 @@
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
                                 android:elevation="8dp"
+                                android:visibility="gone"
                                 app:layout_constraintTop_toBottomOf="@+id/textView6"
                                 tools:layout_editor_absoluteX="16dp">
 
@@ -601,7 +645,7 @@
                                 app:layout_constraintTop_toBottomOf="@+id/cardView11" />
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView13"
+                                android:id="@+id/cardGps"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
@@ -636,12 +680,12 @@
                             </androidx.cardview.widget.CardView>
 
                             <androidx.cardview.widget.CardView
-                                android:id="@+id/cardView14"
+                                android:id="@+id/cardMap"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="8dp"
                                 android:elevation="8dp"
-                                app:layout_constraintTop_toBottomOf="@+id/cardView13"
+                                app:layout_constraintTop_toBottomOf="@+id/cardGps"
                                 tools:layout_editor_absoluteX="16dp">
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -669,12 +713,11 @@
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                             </androidx.cardview.widget.CardView>
-
-
                         </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
+                    </ScrollView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

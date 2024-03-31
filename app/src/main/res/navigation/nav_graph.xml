@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/home2">
+    app:startDestination="@id/splash_screen">
 
     <fragment
         android:id="@+id/home2"
@@ -15,21 +15,45 @@
     </fragment>
     <fragment
         android:id="@+id/alert"
-        android:name="com.nada.weatherapp.Alert"
+        android:name="com.nada.weatherapp.alerts.view.Alert"
         android:label="fragment_alert"
-        tools:layout="@layout/fragment_alert" />
+        tools:layout="@layout/fragment_alert" >
+        <action
+            android:id="@+id/action_alert_to_googleMapFragment"
+            app:destination="@id/googleMapFragment"
+            app:popUpTo="@id/alert"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="longitude"
+            app:argType="string"
+            android:defaultValue="0" />
+        <argument
+            android:name="latitude"
+            app:argType="string"
+            android:defaultValue="0" />
+    </fragment>
     <fragment
         android:id="@+id/setting"
         android:name="com.nada.weatherapp.settings.view.Setting"
         android:label="Setting" >
         <action
             android:id="@+id/action_setting_to_googleMapFragment"
-            app:destination="@id/googleMapFragment" />
+            app:destination="@id/googleMapFragment"
+            app:popUpTo="@id/setting"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/favorite"
-        android:name="com.nada.weatherapp.Favorite"
-        android:label="Favorite" />
+        android:name="com.nada.weatherapp.favorites.view.Favorite"
+        android:label="Favorite" >
+        <action
+            android:id="@+id/action_favorite_to_googleMapFragment"
+            app:destination="@id/googleMapFragment"
+            app:popUpTo="@id/favorite" />
+        <action
+            android:id="@+id/action_favorite_to_favoriteDetails"
+            app:destination="@id/favoriteDetails" />
+    </fragment>
     <fragment
         android:id="@+id/fiveDaysForecast2"
         android:name="com.nada.weatherapp.weather_info.view.FourDaysForecast"
@@ -45,6 +69,9 @@
         <argument
             android:name="latitude"
             app:argType="string" />
+        <argument
+            android:name="isComingFromHome"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/googleMapFragment"
@@ -53,6 +80,46 @@
         tools:layout="@layout/fragment_map" >
         <action
             android:id="@+id/action_googleMapFragment_to_home2"
-            app:destination="@id/home2" />
+            app:destination="@id/home2"
+            app:popUpTo="@id/googleMapFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="source"
+            app:argType="com.nada.weatherapp.Utils.Source" />
+        <action
+            android:id="@+id/action_googleMapFragment_to_favorite"
+            app:destination="@id/favorite"
+            app:popUpTo="@id/googleMapFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_googleMapFragment_to_alert"
+            app:destination="@id/alert"
+            app:popUpTo="@id/googleMapFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteDetails"
+        android:name="com.nada.weatherapp.favorites.view.FavoriteDetails"
+        android:label="FavoriteDetails" >
+        <argument
+            android:name="longitude"
+            app:argType="string" />
+        <argument
+            android:name="latitude"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_favoriteDetails_to_fiveDaysForecast2"
+            app:destination="@id/fiveDaysForecast2" />
+    </fragment>
+    <fragment
+        android:id="@+id/splash_screen"
+        android:name="com.nada.weatherapp.splash_screen"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splash_screen_to_home2"
+            app:destination="@id/home2"
+            app:popUpTo="@id/splash_screen"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

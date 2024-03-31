@@ -13,128 +13,176 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:backgroundTint="#f8f7fd">
 
-
-            <TextView
-                android:textSize="30sp"
-                android:gravity="center"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:text="@string/skylume"
-                android:textColor="@color/white"/>
+                android:layout_height="match_parent">
 
-
-            <LinearLayout
-                android:id="@+id/Home"
-                android:gravity="center_vertical"
-                android:layout_marginTop="50dp"
-                android:layout_marginHorizontal="24dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/home_fill"
-                    app:tint="@color/white" />
-
-                <TextView
-                    android:textSize="18sp"
-                    android:layout_marginHorizontal="16dp"
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/epmty_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home"
-                    android:textColor="@color/white"/>
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/linearLayout3"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/drawer1"
+                    app:lottie_url="REPLACE_JSON_URL" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Favorites"
-                android:gravity="center_vertical"
-                android:layout_marginTop="24dp"
-                android:layout_marginHorizontal="24dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/favorite_fill"
-
-                    app:tint="@color/white" />
-
-                <TextView
-                    android:textSize="18sp"
-                    android:layout_marginHorizontal="16dp"
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/epmty_layout2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/favorites"
-                    android:textColor="@color/white"/>
+                    android:layout_height="500dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="-50dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/drawer4"
+                    app:lottie_url="REPLACE_JSON_URL" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/Alerts"
-                android:gravity="center_vertical"
-                android:layout_marginTop="24dp"
-                android:layout_marginHorizontal="24dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/notifications_fill"
-                    app:tint="@color/white" />
-
-                <TextView
-                    android:textSize="18sp"
-                    android:layout_marginHorizontal="16dp"
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/alerts"
-                    android:textColor="@color/white"/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/Settings"
-                android:gravity="center_vertical"
-                android:layout_marginTop="24dp"
-                android:layout_marginHorizontal="24dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:gravity="center"
+                        android:text="@string/skylume"
+                        android:textColor="@color/black"
+                        android:textSize="30sp" />
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/settings_fill"
 
-                    app:tint="@color/white" />
+                    <LinearLayout
+                        android:id="@+id/Home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="100dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:textSize="18sp"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings"
-                    android:textColor="@color/white"/>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/home_fill"
+                            app:tint="@color/primary" />
 
-            </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="@string/home"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
 
-        </LinearLayout>
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/Favorites"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="100dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/favorite_fill"
+
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="@string/favorites"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/Alerts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="100dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/notifications_fill"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="@string/alerts"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/Settings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="100dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/settings_fill"
+                            app:tint="@color/primary" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:text="@string/settings"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
     </nl.psdcompany.duonavigationdrawer.views.DuoMenuView>
+
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -142,26 +190,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:tag="content"
+        android:visibility="visible"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph"
-        tools:visibility="invisible" />
-
+        tools:visibility="gone" />
 
     <androidx.appcompat.widget.Toolbar
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/ToolbarStyle"
-        android:id="@+id/toolbar"/>
-
-
-
-
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:id="@+id/toolbar" />
 
 </nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout>

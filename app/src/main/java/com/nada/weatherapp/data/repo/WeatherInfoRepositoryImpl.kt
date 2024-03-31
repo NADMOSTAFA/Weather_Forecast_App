@@ -1,23 +1,36 @@
 package com.nada.weatherapp.data.repo
 
+import com.nada.weatherapp.data.local.WeatherLocalDataSource
+import com.nada.weatherapp.data.model.FavoriteWeather
+import com.nada.weatherapp.data.model.WeatherAlert
 import com.nada.weatherapp.data.model.WeatherResponse
-import com.nada.weatherapp.data.remote.ForecastRemoteDataSourceImpl
-import com.nada.weatherapp.data.shared_pref.SharedPreferencesDataSourceImpl
+import com.nada.weatherapp.data.remote.ForecastRemoteDataSource
+import com.nada.weatherapp.data.shared_pref.SharedPreferencesDataSource
 import kotlinx.coroutines.flow.Flow
 
-class WeatherInfoRepositoryImpl private constructor(
-    private var forecastRemoteDataSource: ForecastRemoteDataSourceImpl,
-    private var sharedPreferencesDataSource: SharedPreferencesDataSourceImpl
+class WeatherInfoRepositoryImpl  constructor(
+    private var forecastRemoteDataSource: ForecastRemoteDataSource,
+    private var sharedPreferencesDataSource: SharedPreferencesDataSource,
+//    private var favoriteWeatherLocalDataSource: FavoriteWeatherLocalDataSource,
+    private var weatherLocalDataSource: WeatherLocalDataSource
+
 ) : WeatherInfoRepository {
     companion object {
-        var instance: WeatherInfoRepositoryImpl? = null
+        private var instance: WeatherInfoRepositoryImpl? = null
         fun getInstance(
-            forecastRemoteDataSource: ForecastRemoteDataSourceImpl,
-            sharedPreferencesDataSource: SharedPreferencesDataSourceImpl
+            forecastRemoteDataSource: ForecastRemoteDataSource,
+            sharedPreferencesDataSource: SharedPreferencesDataSource,
+//            favoriteWeatherLocalDataSource: FavoriteWeatherLocalDataSource,
+            weatherLocalDataSource: WeatherLocalDataSource
         ): WeatherInfoRepositoryImpl {
             return instance ?: synchronized(this) {
                 val temp =
-                    WeatherInfoRepositoryImpl(forecastRemoteDataSource, sharedPreferencesDataSource)
+                    WeatherInfoRepositoryImpl(
+                        forecastRemoteDataSource,
+                        sharedPreferencesDataSource,
+//                        favoriteWeatherLocalDataSource,
+                        weatherLocalDataSource
+                    )
                 instance = temp
                 temp
             }
@@ -29,9 +42,43 @@ class WeatherInfoRepositoryImpl private constructor(
         longitude: Double,
         apiKey: String,
         lang: String,
-        units : String
+        units: String
     ): Flow<WeatherResponse> {
-        return forecastRemoteDataSource.getWeatherInfoOverNetwork(latitude, longitude, apiKey, lang,units)
+        return forecastRemoteDataSource.getWeatherInfoOverNetwork(
+            latitude,
+            longitude,
+            apiKey,
+            lang,
+            units
+        )
+    }
+
+    override fun getWeatherFromDB(lang: String): Flow<List<WeatherResponse>> {
+        return weatherLocalDataSource.getWeatherFromDB(lang)
+    }
+
+    override suspend fun insertWeatherResponse(weatherResponse: WeatherResponse) {
+        weatherLocalDataSource.insertWeatherResponse(weatherResponse)
+    }
+
+    override suspend fun deleteWeatherResponse(weatherResponse: WeatherResponse) {
+        weatherLocalDataSource.deleteWeatherResponse(weatherResponse)
+    }
+
+    override suspend fun deleteAll() {
+        weatherLocalDataSource.deleteAll()
+    }
+
+    override fun getSavedWeathers(): Flow<List<FavoriteWeather>> {
+        return weatherLocalDataSource.getSavedWeathers()
+    }
+
+    override suspend fun insertFavoriteWeather(favoriteWeather: FavoriteWeather) {
+        weatherLocalDataSource.insertFavoriteWeather(favoriteWeather)
+    }
+
+    override suspend fun deleteFavoriteWeather(favoriteWeather: FavoriteWeather) {
+        weatherLocalDataSource.deleteFavoriteWeather(favoriteWeather)
     }
 
     override fun saveString(key: String, value: String) {
@@ -48,5 +95,21 @@ class WeatherInfoRepositoryImpl private constructor(
 
     override fun getBoolean(key: String, defaultValue: Boolean): Boolean {
         return sharedPreferencesDataSource.getBoolean(key, defaultValue)
+    }
+
+    override fun removePreference(key: String) {
+        sharedPreferencesDataSource.removePreference(key)
+    }
+
+    override fun getWeatherAlerts(): Flow<List<WeatherAlert>> {
+        return weatherLocalDataSource.getWeatherAlerts()
+    }
+
+    override suspend fun insertWeatherAlert(weatherAlert: WeatherAlert) {
+        weatherLocalDataSource.insertWeatherAlert(weatherAlert)
+    }
+
+    override suspend fun deleteWeatherAlert(weatherAlert: WeatherAlert) {
+        weatherLocalDataSource.deleteWeatherAlert(weatherAlert)
     }
 }

@@ -13,8 +13,8 @@ interface FavoriteWeatherDao {
     suspend fun getSavedWeathers(): List<FavoriteWeather>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoriteWeather(favoriteWeather: FavoriteWeather): Long
+    suspend fun insertFavoriteWeather(favoriteWeather: FavoriteWeather)
 
     @Delete
-    suspend fun deleteFavoriteWeather(favoriteWeather: FavoriteWeather): Int
+    suspend fun deleteFavoriteWeather(favoriteWeather: FavoriteWeather)
 }

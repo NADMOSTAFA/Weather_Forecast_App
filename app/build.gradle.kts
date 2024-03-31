@@ -60,6 +60,9 @@ dependencies {
     //Picasso
     implementation("com.squareup.picasso:picasso:2.8")
 
+    //swiper
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
     //Coroutines Dependencies
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
@@ -104,6 +107,54 @@ dependencies {
     //Location & Maps
     implementation("com.google.android.gms:play-services-location:21.2.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+
+    //Work Manager
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
+
+
+    val junitVersion = "4.13.2"
+    val hamcrestVersion = "1.3"
+    val archTestingVersion = "2.1.0"
+    val robolectricVersion = "4.5.1"
+    val androidXTestCoreVersion = "1.4.0"
+    val androidXTestExtKotlinRunnerVersion = "1.1.3"
+    val androidXTestRulesVersion = "1.2.0"
+    val espressoVersion = "3.4.0"
+    val coroutinesVersion = "1.5.0"
+
+    // Dependencies for local unit tests
+    testImplementation ("junit:junit:$junitVersion")
+    testImplementation ("org.hamcrest:hamcrest-all:$hamcrestVersion")
+    testImplementation ("androidx.arch.core:core-testing:$archTestingVersion")
+    testImplementation ("org.robolectric:robolectric:$robolectricVersion")
+
+    // AndroidX Test - JVM testing
+    testImplementation ("androidx.test:core-ktx:$androidXTestCoreVersion")
+    //testImplementation "androidx.test.ext:junit:$androidXTestExtKotlinRunnerVersion"
+
+    // AndroidX Test - Instrumented testing //Added Item here
+    androidTestImplementation ("androidx.test:runner:$androidXTestExtKotlinRunnerVersion")
+    androidTestImplementation ("androidx.test:rules:$androidXTestRulesVersion")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:$espressoVersion")
+
+    // hamcrest
+    testImplementation ("org.hamcrest:hamcrest:2.2")
+    testImplementation ("org.hamcrest:hamcrest-library:2.2")
+    androidTestImplementation ("org.hamcrest:hamcrest:2.2")
+    androidTestImplementation ("org.hamcrest:hamcrest-library:2.2")
+
+    // AndroidX and Robolectric
+    testImplementation ("androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion")
+    testImplementation ("androidx.test:core-ktx:$androidXTestCoreVersion")
+    testImplementation ("org.robolectric:robolectric:4.8")
+
+    // InstantTaskExecutorRule
+    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+    androidTestImplementation ("androidx.arch.core:core-testing:2.1.0")
+
+    //kotlinx-coroutines
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
 
 
 }

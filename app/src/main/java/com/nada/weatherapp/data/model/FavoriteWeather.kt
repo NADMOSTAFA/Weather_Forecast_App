@@ -4,18 +4,14 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-@Entity(tableName = "favorite_weather")
+@Entity(tableName = "favorite_weather", primaryKeys = ["latitude", "longitude"])
 data class FavoriteWeather(
-    @PrimaryKey
     @NonNull
-    var date : String,
-    val cod: String,
+    val latitude : Double,
+    @NonNull
+    val longitude: Double,
     @ColumnInfo
-    val message: Int,
+    val country: String,
     @ColumnInfo
-    val cnt: Int,
-    @ColumnInfo
-    val list: List<WeatherInfo>,
-    @ColumnInfo
-    val city: City
+    var city: String,
 )

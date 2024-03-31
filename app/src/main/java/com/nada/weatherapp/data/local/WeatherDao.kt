@@ -9,12 +9,16 @@ import com.nada.weatherapp.data.model.WeatherResponse
 
 @Dao
 interface WeatherDao {
-    @Query("SELECT * FROM weather")
-    fun getWeatherFromDB(): List<WeatherResponse>
+    @Query("SELECT * FROM weather WHERE lang = :lang ")
+    fun getWeatherFromDB(lang : String): List<WeatherResponse>
+    @Query("SELECT * FROM weather ")
+    fun getAllWeatherFromDB(): List<WeatherResponse>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertWeatherResponse(weatherResponse: WeatherResponse): Long
+    suspend fun insertWeatherResponse(weatherResponse: WeatherResponse)
 
     @Delete
-    suspend fun deleteWeatherResponse(weatherResponse: WeatherResponse): Int
+    suspend fun deleteWeatherResponse(weatherResponse: WeatherResponse)
+    @Query("DELETE FROM weather")
+    suspend fun deleteAll()
 }

@@ -9,14 +9,14 @@ import androidx.room.PrimaryKey
 data class WeatherResponse(
     @PrimaryKey
     @NonNull
-    val id : String = "1",
-    val cod: String,
+    var lang : String = "en",
+    val cod: String = String(),
     @ColumnInfo
-    val message: Int,
+    val message: Int = 0,
     @ColumnInfo
-    val cnt: Int,
+    val cnt: Int = 40,
     @ColumnInfo
-    val list: List<WeatherInfo>,
+    var list: List<WeatherInfo> = listOf(),
     @ColumnInfo
-    val city: City
+    val city: City = City()
 )

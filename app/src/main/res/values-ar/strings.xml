@@ -32,5 +32,22 @@
     <string name="pressure">الضغط</string>
     <string name="tomorrow">غدًا</string>
     <string name="save">حفظ</string>
+    <string name="favorite">المفضلة</string>
+    <string name="time">الوقت:</string>
+    <string name="date">التاريخ:</string>
+    <string name="alarm">ضبط تنبيه</string>
+    <string name="notificationSmall">اشعار</string>
+    <string name="ok">حفظ</string>
+    <string name="cancel">الغاء</string>
+    <string name="no_connection">لا يوجد اتصال</string>
+    <string name="data_provided_by_openweathermap">البيانات مقدمة من قبل OpenWeatherMap</string>
+    <string name="last_updated">آخر تحديث:</string>
+    <string name="now">الأن</string>
+    <string name="require_location_permission">يتطلب إذن الموقع</string>
+    <string name="allow">السماح</string>
+    <string name="are_you_sure_you_want_to_remove_the_item">هل أنت متأكد أنك تريد إزالة العنصر؟</string>
+    <string name="delete">حذف</string>
+    <string name="unknow">غير معروف</string>
+    <string name="skylume_alert">تنبيه من سكيلوم</string>
 
 </resources>
