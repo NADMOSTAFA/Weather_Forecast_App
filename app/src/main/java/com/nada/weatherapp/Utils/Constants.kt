@@ -1,0 +1,27 @@
+package com.nada.weatherapp.Utils
+
+object Constants {
+    const val LATITUDE  = "LATITUDE"
+    const val LONGITUDE = "LONGITUDE"
+    const val LANGUAGE = "LANGUAGE"
+    const val TYPE =  "TYPE"
+    const val ALARM = "ALARM"
+    const val NOTIFICATION = "NOTIFICATION"
+    const val FAILURE_REASON = "FAILURE_REASON"
+    const val TEMPERATURE_UNIT = "temperatureUnit"
+    const val WIND_UNIT = "windUnit"
+    const val LOCATION = "location"
+    const val SESSION = "start_session"
+    const val METRIC = "metric"
+    const val IMPERIAL = "imperial"
+    const val STANDARD = "standard"
+    const val METER_PER_SECOND = "meterPerSec"
+    const val MILE_PER_HOUR = "milePerHour"
+    const val ENGLISH = "en"
+    const val ARABIC = "ar"
+    const val MAP = "map"
+    const val GPS = "gps"
+    const val HOME = "HOME"
+    const val TODAY_FORECAST = "TODAY_FORECAST"
+    const val FOUR_DAYS_FORECAST = "FOUR_DAYS_FORECAST"
+}
