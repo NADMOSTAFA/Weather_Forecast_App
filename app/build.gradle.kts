@@ -155,6 +155,7 @@ dependencies {
     //kotlinx-coroutines
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
     androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
+    implementation("androidx.core:core-splashscreen:1.0.0")
 
 
 }

@@ -20,11 +20,6 @@ class AlertsListAdapter(private val itemListener: OnAlertRemoveListener) : ListA
 
     inner class AlertViewHolder(var binding: ItemAlertBinding) :
         RecyclerView.ViewHolder(binding.root) {
-//        init {
-//            itemView.setOnClickListener {
-//                itemListener(getItem(adapterPosition))
-//            }
-//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlertViewHolder {

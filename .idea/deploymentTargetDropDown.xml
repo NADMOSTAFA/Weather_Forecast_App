@@ -2,21 +2,20 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="WeatherDaoTest">
+        <State />
+      </entry>
+      <entry key="WeatherLocalDataSourceImplTest">
+        <State />
+      </entry>
       <entry key="app">
-        <State>
-          <runningDeviceTargetSelectedWithDropDown>
-            <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Mostafa\.android\avd\Nexus_6_API_32.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-03-31T05:27:45.272873200Z" />
-        </State>
+        <State />
+      </entry>
+      <entry key="deleteAllWeathers_emptyList()">
+        <State />
+      </entry>
+      <entry key="insertWeather_weatherData_retrieveWeatherDataInserted() (1)">
+        <State />
       </entry>
     </value>
   </component>

@@ -11,5 +11,9 @@
 <!--        <item name="android:tint">@color/white</item>-->
 <!--    </style>-->
 
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+    </style>
+
     <style name="Theme.WeatherApp" parent="Base.Theme.WeatherApp" />
 </resources>

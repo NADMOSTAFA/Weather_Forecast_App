@@ -65,17 +65,7 @@ class WeatherInfoViewModel(private val _repo: WeatherInfoRepository) : ViewModel
                     }
                 }
                 var weatherResponse = data
-//                when (getTemperatureUnit()) {
-//                    Constants.IMPERIAL -> {
-//                        weatherResponse = convertToFahrenheit(data)
-//
-//                    }
-//
-//                    Constants.METRIC -> {
-//                        weatherResponse = convertToCelsius(data)
-//
-//                    }
-//                }
+
                 weatherResponse = setWeatherResponseTempUnit(data)
                 when (getWindUnit()) {
                     Constants.MILE_PER_HOUR -> {
@@ -83,7 +73,6 @@ class WeatherInfoViewModel(private val _repo: WeatherInfoRepository) : ViewModel
                     }
                 }
                 if (source == Constants.HOME) {
-                    Log.i("nada", "3-getWeatherInfoOverNetwork: fromHome ${Constants.HOME}")
                     setDataCached(true)
                 }
                 _weatherInfo.value =
@@ -108,61 +97,6 @@ class WeatherInfoViewModel(private val _repo: WeatherInfoRepository) : ViewModel
         }
         return convertedData
     }
-
-//    fun getWeatherInfoOverNetwork(
-//        latitude: Double,
-//        longitude: Double,
-//        apiKey: String = "47c1440938387595e380110ff3ce9e84",
-//        lang: String = "en",
-//        units: String = "standard",
-//        fromHome: Boolean = true
-//    ) {
-//        Log.i("here", "getWeatherInfoOverNetwork: Entered From Real Call")
-//        viewModelScope.launch(Dispatchers.IO) {
-//            _repo.getWeatherInfoOverNetwork(latitude, longitude, apiKey, lang, units).catch { e ->
-//                _weatherInfo.value = State.Failure(e)
-//            }.collect { data ->
-//                Log.i("here", "getWeatherInfoOverNetwork: ${_repo.getBoolean(Constants.SESSION, false)}")
-//                if (fromHome) {
-//                    Log.i("nada", "1-getWeatherInfoOverNetwork: fromHome $fromHome")
-//                    if (!_repo.getBoolean(Constants.SESSION, false)) {
-//                        _repo.deleteAll()
-//                    }
-//                    data.lang = lang
-//                    _repo.insertWeatherResponse(data)
-//                    data.list = getTodayForecast(data.list)
-//                }else{
-//                    //Error Should check if come from favoriteDetails ot favoriteDetailsDetails
-//                    Log.i("nada", "2-getWeatherInfoOverNetwork: fromHome $fromHome")
-//                    data.list = getTodayForecast(data.list)
-//                }
-//                var weatherResponse = data
-//                when (getTemperatureUnit()) {
-//                    Constants.IMPERIAL -> {
-//                        weatherResponse = convertToFahrenheit(data)
-//
-//                    }
-//
-//                    Constants.METRIC -> {
-//                        weatherResponse = convertToCelsius(data)
-//
-//                    }
-//                }
-//                when (getWindUnit()) {
-//                    Constants.MILE_PER_HOUR -> {
-//                        weatherResponse = convertToMPH(weatherResponse)
-//                    }
-//                }
-//                if (fromHome) {
-//                    Log.i("nada", "3-getWeatherInfoOverNetwork: fromHome $fromHome")
-//                    setDataCached(true)
-//                }
-//                _weatherInfo.value =
-//                    State.Success(weatherResponse, WeatherResponse::class.java)
-//            }
-//        }
-//
-//    }
 
 
     fun getWeatherFromDB(lang: String, fromHome: Boolean = true) {

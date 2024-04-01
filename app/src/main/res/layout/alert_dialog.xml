@@ -24,8 +24,8 @@
 
     <ImageView
         android:id="@+id/photo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="94dp"
+        android:layout_height="99dp"
         android:layout_marginTop="8dp"
         android:contentDescription="Photo"
         android:src="@drawable/lightining"
@@ -74,7 +74,7 @@
         android:layout_marginTop="18dp"
         android:background="@drawable/btnshow_background"
         android:gravity="center"
-        android:text="@string/ok"
+        android:text="@string/ok2"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

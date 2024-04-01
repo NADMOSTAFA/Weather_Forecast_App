@@ -101,6 +101,10 @@ class FourDaysForecast : Fragment(), OnWeatherInfoClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as? MainActivity)?.hideActionBarAndDrawer()
         super.onViewCreated(view, savedInstanceState)
+        if (weatherInfoViewModel.getLanguage() == Constants.ARABIC) {
+            binding.tempUnit1.visibility = View.GONE
+            binding.tempUnit2.visibility = View.GONE
+        }
         var navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
         binding.btnBack.setOnClickListener {
             if (isComingFromHome) {

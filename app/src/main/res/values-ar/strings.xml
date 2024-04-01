@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">تطبيق الطقس</string>
+    <string name="app_name">سكيلوم</string>
     <string name="hello_blank_fragment">مرحبًا بالفراغ الفارغ</string>
     <string name="google_map_api_key">AIzaSyAZXOAdBGARD3-G3wNLWXOUKcmbR0FTZio</string>
     <string name="today">اليوم</string>
@@ -48,6 +48,10 @@
     <string name="are_you_sure_you_want_to_remove_the_item">هل أنت متأكد أنك تريد إزالة العنصر؟</string>
     <string name="delete">حذف</string>
     <string name="unknow">غير معروف</string>
+    <string name="K">K</string>
+    <string name="C">C</string>
+    <string name="F">F</string>
+    <string name="ok2">حسنا</string>
     <string name="skylume_alert">تنبيه من سكيلوم</string>
 
 </resources>

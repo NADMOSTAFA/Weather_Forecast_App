@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">Skylume</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="google_map_api_key">AIzaSyAZXOAdBGARD3-G3wNLWXOUKcmbR0FTZio</string>
     <string name="today">Today</string>
@@ -38,6 +38,7 @@
     <string name="alarm">Set Alert</string>
     <string name="notificationSmall">Notification</string>
     <string name="ok">Ok</string>
+    <string name="ok2">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="now">Now</string>
     <string name="no_connection">No Connection</string>
@@ -48,5 +49,8 @@
     <string name="are_you_sure_you_want_to_remove_the_item">Are you sure you want to remove the item?</string>
     <string name="delete">Delete</string>
     <string name="unknow">Unknown</string>
+    <string name="K">K</string>
+    <string name="C">C</string>
+    <string name="F">F</string>
     <string name="skylume_alert">Skylume Alert</string>
 </resources>

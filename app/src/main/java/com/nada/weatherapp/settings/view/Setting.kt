@@ -62,7 +62,8 @@ class Setting : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        (activity as? MainActivity)?.showActionBarAndDrawer()
+
         binding = FragmentSettingBinding.inflate(inflater, container, false)
 
 
@@ -138,11 +139,6 @@ class Setting : Fragment() {
             binding.location.setOnCheckedChangeListener { group, checkedId ->
                 when (checkedId) {
                     R.id.rbGps -> {
-                        settingsViewModel.setSettingConfiguration(Constants.LOCATION, Constants.GPS)
-
-                        //New
-                        settingsViewModel.setSettingConfiguration(Constants.SESSION, false)
-                        settingsViewModel.deleteAll()
                     }
 
                     R.id.rbMap -> {
@@ -155,10 +151,18 @@ class Setting : Fragment() {
                 }
             }
 
-            binding.rbMap.setOnClickListener {
-                settingsViewModel.setSettingConfiguration(Constants.LOCATION, Constants.MAP)
+            binding.rbGps.setOnClickListener {
+                settingsViewModel.setSettingConfiguration(Constants.LOCATION, Constants.GPS)
+                //New
                 settingsViewModel.setSettingConfiguration(Constants.SESSION, false)
                 settingsViewModel.deleteAll()
+            }
+
+            binding.rbMap.setOnClickListener {
+                settingsViewModel.setSettingConfiguration(Constants.SESSION, false)
+                settingsViewModel.setSettingConfiguration(Constants.LOCATION, Constants.MAP)
+                settingsViewModel.deleteAll()
+                settingsViewModel.setSettingConfiguration(Constants.SESSION, false)
                 Navigation.findNavController(view)
                     .navigate(SettingDirections.actionSettingToGoogleMapFragment(Source.SETTINGS))
             }

@@ -9,7 +9,6 @@ import android.net.NetworkRequest
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -68,8 +67,6 @@ class Favorite : Fragment(), onFavoriteWeatherClickListener, onRemoveClickListen
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-//        inflater.inflate(R.layout.fragment_favorite, container, false)
         (activity as? MainActivity)?.showActionBarAndDrawer()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite, container, false)
         adapter = FavoriteListAdapter({ this.onClick(it) }, this)
@@ -110,10 +107,6 @@ class Favorite : Fragment(), onFavoriteWeatherClickListener, onRemoveClickListen
     }
 
     override fun onClick(favoriteWeather: FavoriteWeather) {
-        Log.i(
-            "nada",
-            "from navigation:long ${favoriteWeather.longitude} lat${favoriteWeather.latitude} "
-        )
         Navigation.findNavController(requireView()).navigate(
             FavoriteDirections.actionFavoriteToFavoriteDetails(
                 favoriteWeather.longitude.toString(),

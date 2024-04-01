@@ -20,9 +20,6 @@ class FavoriteViewModel(private val _repo: WeatherInfoRepository) : ViewModel() 
     private var _favWeatherInfo: MutableStateFlow<List<FavoriteWeather>> =
         MutableStateFlow<List<FavoriteWeather>>(listOf())
     val favWeatherInfo: StateFlow<List<FavoriteWeather>> = _favWeatherInfo
-//    private var _favWeatherInfo: MutableLiveData<List<FavoriteWeather>> =
-//        MutableLiveData<List<FavoriteWeather>>(listOf())
-//    val favWeatherInfo: LiveData<List<FavoriteWeather>> = _favWeatherInfo
 
     init {
         getStoredWeather()
@@ -32,13 +29,11 @@ class FavoriteViewModel(private val _repo: WeatherInfoRepository) : ViewModel() 
         viewModelScope.launch(Dispatchers.IO) {
             _repo.getSavedWeathers().collect { data ->
                 _favWeatherInfo.value = data
-//                _favWeatherInfo.postValue(data)
             }
         }
     }
 
     fun removeWeather(weather: FavoriteWeather) {
-        Log.i("here", "removeWeather: entered")
         viewModelScope.launch(Dispatchers.IO) {
             _repo.deleteFavoriteWeather(weather)
             getStoredWeather()

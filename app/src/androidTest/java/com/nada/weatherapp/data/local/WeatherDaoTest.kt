@@ -6,6 +6,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.nada.weatherapp.data.model.WeatherResponse
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -45,7 +47,10 @@ class WeatherDaoTest {
         val weather: WeatherResponse = WeatherResponse(lang = "en")
         //When
         dao.insertWeatherResponse(weather)
-        val result = dao.getWeatherFromDB("en")
+        var result = mutableListOf<WeatherResponse>()
+        dao.getWeatherFromDB("en").take(1).collectLatest {
+            result = it.toMutableList()
+        }
         //Then
         assertThat(result.get(0), `is`(weather))
     }
@@ -58,7 +63,10 @@ class WeatherDaoTest {
         dao.insertWeatherResponse(weather)
         dao.insertWeatherResponse(weather)
 
-        val result = dao.getWeatherFromDB("en")
+        var result = mutableListOf<WeatherResponse>()
+        dao.getWeatherFromDB("en").take(1).collectLatest {
+            result = it.toMutableList()
+        }
         //Then
         assertThat(result.size, `is`(1))
         assertThat(result.get(0), `is`(weather))
@@ -71,7 +79,10 @@ class WeatherDaoTest {
         //When
         dao.insertWeatherResponse(weatherInEnglish)
         dao.deleteWeatherResponse(weatherInEnglish)
-        val result = dao.getWeatherFromDB("en")
+        var result = mutableListOf<WeatherResponse>()
+        dao.getWeatherFromDB("en").take(1).collectLatest {
+            result = it.toMutableList()
+        }
         //Then
         assertThat(result, `is`(emptyList()))
     }
@@ -85,7 +96,10 @@ class WeatherDaoTest {
         dao.insertWeatherResponse(weatherInEnglish)
         dao.insertWeatherResponse(weatherInArabic)
         dao.deleteAll()
-        val result = dao.getAllWeatherFromDB()
+        var result = mutableListOf<WeatherResponse>()
+        dao.getAllWeatherFromDB().take(1).collectLatest {
+            result = it.toMutableList()
+        }
         //Then
         assertThat(result, `is`(emptyList()))
         assertThat(result.size, `is`(0))

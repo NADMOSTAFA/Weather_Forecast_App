@@ -46,7 +46,6 @@ class FavoriteDetails : Fragment(), OnWeatherInfoClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        (activity as? MainActivity)?.hideActionBarAndDrawer()
         val args = FavoriteDetailsArgs.fromBundle(arguments ?: Bundle())
         longitude = args.longitude.toDouble()
         latitude = args.latitude.toDouble()
@@ -116,7 +115,6 @@ class FavoriteDetails : Fragment(), OnWeatherInfoClickListener {
                         when (it.type) {
                             WeatherResponse::class.java -> {
                                 val weatherResponse: WeatherResponse = it.data as WeatherResponse
-                                Log.i("here", "favoriteDetails: Response  ${weatherResponse.cnt}")
                                 var weatherInfo =
                                     weatherResponse.list.get(0)
                                 weatherInfo!!.date = weatherInfoViewModel.getCurrentDate()

@@ -33,12 +33,11 @@ import java.util.Locale
 
 
 class WeatherAlertWorker(var context: Context, params: WorkerParameters) : Worker(context, params) {
-    lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mediaPlayer: MediaPlayer
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun doWork(): Result {
         try {
-            Log.i("alert", "doWork: enter0")
             //Network Call
             val weatherApiService: WeatherApiService by lazy {
                 RetrofitHelper.getInstance().create(WeatherApiService::class.java)
@@ -51,11 +50,6 @@ class WeatherAlertWorker(var context: Context, params: WorkerParameters) : Worke
             val alertType = inputData.getString(Constants.TYPE)
 
 
-
-            Log.i("alert", "doWork: lat $latitude long $longitude lang $language type $alertType")
-
-//        var deferred: Deferred<WeatherResponse>? = null
-
             //call method
             val weatherResponse: WeatherResponse = runBlocking {
                 weatherApiService.getForecast(
@@ -66,30 +60,23 @@ class WeatherAlertWorker(var context: Context, params: WorkerParameters) : Worke
             }
 
 
-            Log.i("alert", "doWork: 1")
             if (alertType == Constants.NOTIFICATION) {
-                Log.i("alert", "doWork: 2")
                 return if (checkForNotificationPermission(applicationContext)) {
-                    Log.i("alert", "doWork: 3")
                     sendNotification(
                         "Weather Alert Notification",
                         weatherResponse.list.get(0).weather.get(0).description
                     )
                     Result.success()
                 } else {
-                    Log.i("alert", "doWork: notification no permission")
                     Result.failure()
                 }
             } else {
-                Log.i("alert", "doWork: 4")
                 return if (Settings.canDrawOverlays(applicationContext)) {
-                    Log.i("alert", "doWork: 5")
                     Handler(Looper.getMainLooper()).post {
                         showDialog(weatherResponse)
                     }
                     Result.success()
                 } else {
-                    Log.i("alert", "doWork:DrawOverlays  no permission")
                     Result.failure()
                 }
 
@@ -97,7 +84,6 @@ class WeatherAlertWorker(var context: Context, params: WorkerParameters) : Worke
             }
 
         } catch (e: Exception) {
-            Log.i("alert", "doWork: ${e.message}")
             return Result.failure(workDataOf(Constants.FAILURE_REASON to e.message))
         }
         return Result.failure()
@@ -118,7 +104,6 @@ class WeatherAlertWorker(var context: Context, params: WorkerParameters) : Worke
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Create a notification channel for devices running Android Oreo and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
@@ -141,17 +126,14 @@ class WeatherAlertWorker(var context: Context, params: WorkerParameters) : Worke
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun showDialog(weatherResponse: WeatherResponse) {
-        // Inflate the custom layout
         val inflater = LayoutInflater.from(applicationContext)
         val dialogView = inflater.inflate(R.layout.alert_dialog, null)
 
-        // Find views in the custom layout
         val photo = dialogView.findViewById<ImageView>(R.id.photo)
         val tvMessage = dialogView.findViewById<TextView>(R.id.message)
         val tvCountry = dialogView.findViewById<TextView>(R.id.country)
         val btnOk = dialogView.findViewById<TextView>(R.id.btnOk)
 
-        // Set photo, title, and subtitle
         val resId: Int = applicationContext.resources.getIdentifier(
             "icon_${weatherResponse.list.get(0).weather.get(0).icon}",
             "drawable",
@@ -188,13 +170,13 @@ class WeatherAlertWorker(var context: Context, params: WorkerParameters) : Worke
 
     private fun playSound() {
         mediaPlayer = MediaPlayer.create(applicationContext, R.raw.rain)
-        mediaPlayer?.isLooping = true
-        mediaPlayer?.start()
+        mediaPlayer.isLooping = true
+        mediaPlayer.start()
     }
 
     private fun stopSound() {
-        mediaPlayer?.stop()
-        mediaPlayer?.release()
+        mediaPlayer.stop()
+        mediaPlayer.release()
     }
 
 

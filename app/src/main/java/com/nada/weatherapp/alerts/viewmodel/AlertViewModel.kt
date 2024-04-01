@@ -56,15 +56,12 @@ class AlertViewModel(private val _repo: WeatherInfoRepository) : ViewModel() {
     }
 
     private fun isAlertDateBeforeCurrent(inputDateTimeString: String): Boolean {
-        val currentDateTime = Date() // Current date and time
-        val alertDateTime = getAlertDate(inputDateTimeString) // Parsed date and time
-
-        // Compare the milliseconds of both dates
+        val currentDateTime = Date()
+        val alertDateTime = getAlertDate(inputDateTimeString)
         return alertDateTime.time < currentDateTime.time
     }
 
     fun cancelWeatherAlert(weatherAlert: WeatherAlert) {
-        Log.i("here", "removeWeather: entered")
         val workManager = WorkManager.getInstance()
         val workerId = stringToUUID(weatherAlert.id)
         viewModelScope.launch(Dispatchers.IO) {
@@ -94,17 +91,11 @@ class AlertViewModel(private val _repo: WeatherInfoRepository) : ViewModel() {
         longitude: Double,
         alertType: String
     ) {
-        Log.i("alert", "onCreate: enter1")
 
         val dateTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
         val dateTimeString = "$date $time"
         val dateTime: Date = dateTimeFormat.parse(dateTimeString) ?: Date()
 
-
-        // Calculate delay until the scheduled time
-//        val delay = dateTime.time - System.currentTimeMillis()
-
-        // Create OneTimeWorkRequest with calculated initial delay
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -114,10 +105,6 @@ class AlertViewModel(private val _repo: WeatherInfoRepository) : ViewModel() {
         inputData.putDouble(Constants.LONGITUDE, longitude)
         inputData.putString(Constants.LANGUAGE, _repo.getString(Constants.LANGUAGE, ""))
         inputData.putString(Constants.TYPE, alertType)
-
-        Log.i("alert", "my date and time: $dateTimeString")
-
-        Log.i("alert", "setAlert: enter 3")
         val workRequest = OneTimeWorkRequestBuilder<WeatherAlertWorker>()
             .setInputData(inputData.build())
             .setInitialDelay(dateTime.time - System.currentTimeMillis(), TimeUnit.MILLISECONDS)
@@ -130,8 +117,6 @@ class AlertViewModel(private val _repo: WeatherInfoRepository) : ViewModel() {
             time,
         )
         insertWeatherAlert(weatherAlert)
-
-        // Enqueue the work request
         WorkManager.getInstance(context).enqueue(workRequest)
 
     }

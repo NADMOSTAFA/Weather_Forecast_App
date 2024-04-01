@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.graphics.Color
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Network
@@ -32,6 +33,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.google.android.material.snackbar.Snackbar
 import com.nada.weatherapp.MainActivity
 import com.nada.weatherapp.R
 import com.nada.weatherapp.Utils.Constants
@@ -67,8 +69,6 @@ class Home : Fragment(), OnWeatherInfoClickListener {
     var latitude: Double? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        (activity as? MainActivity)?.blackToolbar()
-
         weatherInfoViewModelFactory = WeatherInfoViewModelFactory(
             WeatherInfoRepositoryImpl.getInstance(
                 ForecastRemoteDataSourceImpl.getInstance(),
@@ -114,7 +114,6 @@ class Home : Fragment(), OnWeatherInfoClickListener {
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
         if (!(activeNetworkInfo != null && activeNetworkInfo.isConnected)) {
-            Log.i(TAG, "onStart: api 1")
             checkForLocationAndGetTheData()
         } else {
             checkInternetConnection()
@@ -127,6 +126,9 @@ class Home : Fragment(), OnWeatherInfoClickListener {
         binding.btnOpenDrawer.setOnClickListener {
             (activity as? MainActivity)?.openDrawerLayout()
 
+        }
+        if(weatherInfoViewModel.getLanguage() == Constants.ARABIC){
+            binding.tempUnit.visibility = View.GONE
         }
         binding.btnFiveDaysForecast.setOnClickListener {
             Navigation.findNavController(view).navigate(
@@ -145,10 +147,6 @@ class Home : Fragment(), OnWeatherInfoClickListener {
                         when (it.type) {
                             WeatherResponse::class.java -> {
                                 val weatherResponse: WeatherResponse = it.data as WeatherResponse
-                                Log.i(
-                                    TAG,
-                                    "onViewCreated: Response  lat ${weatherResponse.city.coord.lat} long ${weatherResponse.city.coord.lon}"
-                                )
                                 var weatherInfo =
                                     weatherResponse.list.get(0)
                                 weatherInfo!!.date = weatherInfoViewModel.getCurrentDate()
@@ -325,7 +323,6 @@ class Home : Fragment(), OnWeatherInfoClickListener {
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
         if ((activeNetworkInfo != null && activeNetworkInfo.isConnected) && !weatherInfoViewModel.isDataCached()!!) {
-            Log.i("here", "onCreateView: Data from Network")
             if (weatherInfoViewModel.getLocation() == Constants.GPS) {
                 if (checkPermissions(requireContext())) {
                     if (isLocationEnabled()) {
@@ -351,6 +348,7 @@ class Home : Fragment(), OnWeatherInfoClickListener {
                 weatherInfoViewModel.setDataCached(true)
             }
         } else {
+            Log.i(TAG, "from Db: ")
             weatherInfoViewModel.getWeatherFromDB(weatherInfoViewModel.getLanguage()!!)
         }
 
@@ -369,7 +367,6 @@ class Home : Fragment(), OnWeatherInfoClickListener {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
                 mHandler.post {
-                    Log.i(TAG, "onStart: api 2")
                     binding.networkLayout.visibility = View.GONE
                     binding.loadingLayout.visibility = View.VISIBLE
                     checkForLocationAndGetTheData()
@@ -385,15 +382,15 @@ class Home : Fragment(), OnWeatherInfoClickListener {
     private fun getTempUnit() {
         when (weatherInfoViewModel.getTemperatureUnit()) {
             Constants.IMPERIAL -> {
-                binding.unit = "F"
+                binding.unit = getString(R.string.F)
             }
 
             Constants.STANDARD -> {
-                binding.unit = "K"
+                binding.unit = getString(R.string.K)
             }
 
             Constants.METRIC -> {
-                binding.unit = "C"
+                binding.unit = getString(R.string.C)
             }
         }
     }

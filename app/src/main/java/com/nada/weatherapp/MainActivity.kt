@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -48,18 +49,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        settingsViewModelFactory = SettingsViewModelFactory(
-//            WeatherInfoRepositoryImpl.getInstance(
-//                ForecastRemoteDataSourceImpl.getInstance(),
-//                SharedPreferencesDataSourceImpl.getInstance(this),
-//                FavoriteWeatherLocalDataSourceImpl(
-//                    WeatherDatabase.getInstance(this).getFavoriteWeatherDao()
-//                ),
-//                CachedWeatherLocalDataSourceImpl(
-//                    WeatherDatabase.getInstance(this).getWeatherDao()
-//                )
-//            )
-//        )
         settingsViewModelFactory = SettingsViewModelFactory(
             WeatherInfoRepositoryImpl.getInstance(
                 ForecastRemoteDataSourceImpl.getInstance(),
@@ -73,10 +62,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         )
         settingsViewModel =
             ViewModelProvider(this, settingsViewModelFactory).get(SettingsViewModel::class.java)
-        if (savedInstanceState != null) {
-            settingsViewModel.setSettingConfiguration(Constants.SESSION,true)
-        }
-
         setUp()
         setContentView(R.layout.activity_main)
         navController = findNavController(this, R.id.nav_host_fragment)
@@ -157,10 +142,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 supportActionBar?.hide()
                 drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
-        //            else {
-//                supportActionBar?.show()
-//                drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED)
-//            }
         }
     }
 
@@ -190,23 +171,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             null,
             NavOptions.Builder().setPopUpTo(R.id.home2, false).build()
         )
-    }
-
-    override fun onPause() {
-        super.onPause()
-        settingsViewModel.setSettingConfiguration(Constants.SESSION,false)
-        Log.i("here", "onPause: ")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("here", "onStop: ")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("here", "onDestroy: ")
-
     }
 
     private fun setUp() {
@@ -255,15 +219,4 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         drawerLayout?.setDrawerLockMode(DuoDrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
-//    fun blackToolbar(){
-//         toolbar = findViewById(R.id.toolbar)
-//        toolbar.popupTheme = androidx.appcompat.R.style.ThemeOverlay_AppCompat_Light
-//        val themedContext = ContextThemeWrapper(toolbar.context, androidx.appcompat.R.style.ThemeOverlay_AppCompat_DayNight_ActionBar)
-//        toolbar.context = themedContext
-//    }
-//    fun whiteToolbar(){
-//        toolbar = findViewById(R.id.toolbar)
-//        toolbar.popupTheme = androidx.appcompat.R.style.ThemeOverlay_AppCompat_Light
-//        themedContext = ContextThemeWrapper(toolbar.context, androidx.appcompat.R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
-//    }
 }

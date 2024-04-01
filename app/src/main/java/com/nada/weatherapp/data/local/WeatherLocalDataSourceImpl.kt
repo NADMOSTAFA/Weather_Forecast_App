@@ -12,15 +12,17 @@ class WeatherLocalDataSourceImpl(
     private val alertDao: AlertDao
 ) : WeatherLocalDataSource {
     override fun getWeatherFromDB(lang: String): Flow<List<WeatherResponse>> {
-        return flow {
-            emit(weatherDao.getWeatherFromDB(lang))
-        }
+//        return flow {
+//            emit(weatherDao.getWeatherFromDB(lang))
+//        }
+        return weatherDao.getWeatherFromDB(lang)
     }
 
     override fun getAllWeatherFromDB(): Flow<List<WeatherResponse>> {
-        return flow {
-            emit(weatherDao.getAllWeatherFromDB())
-        }
+//        return flow {
+//            emit(weatherDao.getAllWeatherFromDB())
+//        }
+        return weatherDao.getAllWeatherFromDB()
     }
 
     override suspend fun insertWeatherResponse(weatherResponse: WeatherResponse) {
@@ -37,9 +39,10 @@ class WeatherLocalDataSourceImpl(
 
     //Favorite
     override fun getSavedWeathers(): Flow<List<FavoriteWeather>> {
-        return flow {
-            emit(favoriteWeatherDao.getSavedWeathers())
-        }
+//        return flow {
+//            emit(favoriteWeatherDao.getSavedWeathers())
+//        }
+        return favoriteWeatherDao.getSavedWeathers()
     }
 
     override suspend fun insertFavoriteWeather(favoriteWeather: FavoriteWeather) {
@@ -52,9 +55,10 @@ class WeatherLocalDataSourceImpl(
 
     //Alert
     override fun getWeatherAlerts():  Flow<List<WeatherAlert>> {
-        return flow {
-            emit(alertDao.getWeatherAlerts())
-        }
+//        return flow {
+//            emit(alertDao.getWeatherAlerts())
+//        }
+        return alertDao.getWeatherAlerts()
     }
 
     override suspend fun insertWeatherAlert(weatherAlert: WeatherAlert) {

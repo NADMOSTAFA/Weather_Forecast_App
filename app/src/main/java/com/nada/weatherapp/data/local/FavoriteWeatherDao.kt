@@ -6,11 +6,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.nada.weatherapp.data.model.FavoriteWeather
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteWeatherDao {
     @Query("SELECT * FROM favorite_weather")
-    suspend fun getSavedWeathers(): List<FavoriteWeather>
+    fun getSavedWeathers(): Flow<List<FavoriteWeather>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavoriteWeather(favoriteWeather: FavoriteWeather)

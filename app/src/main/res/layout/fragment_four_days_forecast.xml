@@ -472,7 +472,7 @@
                             </LinearLayout>
 
                             <TextView
-                                android:id="@+id/textView10"
+                                android:id="@+id/tempUnit1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{unit}"
@@ -483,7 +483,7 @@
                                 app:layout_constraintTop_toTopOf="@+id/tvMaxTemprature" />
 
                             <TextView
-                                android:id="@+id/textView11"
+                                android:id="@+id/tempUnit2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@{unit}"

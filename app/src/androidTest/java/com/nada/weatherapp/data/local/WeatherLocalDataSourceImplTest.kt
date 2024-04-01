@@ -6,6 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.nada.weatherapp.data.model.WeatherAlert
 import com.nada.weatherapp.data.model.WeatherResponse
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -47,7 +48,7 @@ class WeatherLocalDataSourceImplTest {
         //When
         localDataSource.insertWeatherResponse(weather)
         var result = WeatherResponse()
-        localDataSource.getWeatherFromDB("en").collect { data ->
+        localDataSource.getWeatherFromDB("en").take(1).collect { data ->
             result = data.get(0)
         }
         //Then
@@ -62,7 +63,7 @@ class WeatherLocalDataSourceImplTest {
         localDataSource.insertWeatherResponse(weatherInEnglish)
         localDataSource.deleteWeatherResponse(weatherInEnglish)
         var result = mutableListOf<WeatherResponse>()
-        localDataSource.getWeatherFromDB("en").collect { data ->
+        localDataSource.getWeatherFromDB("en").take(1).collect { data ->
             result = data.toMutableList()
         }
         //Then
@@ -79,7 +80,7 @@ class WeatherLocalDataSourceImplTest {
         localDataSource.insertWeatherResponse(weatherInArabic)
         localDataSource.deleteAll()
         var result = mutableListOf<WeatherResponse>()
-        localDataSource.getAllWeatherFromDB().collect { data ->
+        localDataSource.getAllWeatherFromDB().take(1).collect { data ->
             result = data.toMutableList()
         }
         //Then
@@ -98,7 +99,7 @@ class WeatherLocalDataSourceImplTest {
         localDataSource.insertWeatherAlert(weatherAlert2)
 
         var result = mutableListOf<WeatherAlert>()
-        localDataSource.getWeatherAlerts().collect { data ->
+        localDataSource.getWeatherAlerts().take(1).collect { data ->
             result = data.toMutableList()
         }
         //Then
@@ -117,7 +118,7 @@ class WeatherLocalDataSourceImplTest {
         localDataSource.insertWeatherAlert(weatherAlert2)
         localDataSource.deleteWeatherAlert(weatherAlert1)
         var result = mutableListOf<WeatherAlert>()
-        localDataSource.getWeatherAlerts().collect { data ->
+        localDataSource.getWeatherAlerts().take(1).collect { data ->
             result = data.toMutableList()
         }
 
